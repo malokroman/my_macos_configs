@@ -1,0 +1,224 @@
+# ===== default declaration =====
+::default : yabai -m config active_window_opacity        1.00
+# ::default : yabai -m config mouse_follows_focus          off  ;\
+#             yabai -m config window_gap                   3
+
+default < fn - f : yabai -m window --toggle zoom-fullscreen
+
+# ===== basic commands =====
+# Alfred: Meh - *
+::command @
+default < cmd - space ; command
+command < return ; default
+command < escape ; default
+
+command < cmd - space -> ; default
+command < space : open -a "/Applications/Alfred 4.app" ; \
+                  skhd -k "return"
+
+command < k : skhd -k "meh - k"  # Kill ;; Alfred
+command < meh - k -> ; default
+
+command < f : skhd -k "meh - f"  # Find file ;; Alfred
+command < meh - f -> ; default
+
+command < r : skhd -k "meh - r"  # Recent downloads ;; Alfred
+command < meh - r -> ; default
+
+command < 0x2F : skhd -k "meh - 0x2F"  # period : Prev Directory ;; Alfred
+command < meh - 0x2F -> ; default
+
+# ===== windows =====
+::window @ : yabai -m config active_window_opacity        0.90
+# ::window @ : yabai -m config mouse_follows_focus          on   ;\
+#              yabai -m config window_gap                   20
+command < w ; window
+window < return ; default
+
+# closing events
+window < b : yabai -m space --balance ;\
+             skhd -k "return"
+window < f : yabai -m window --toggle zoom-fullscreen ;\
+             skhd -k "return"
+
+# focus window
+window < h : yabai -m window --focus west
+window < j : yabai -m window --focus south
+window < k : yabai -m window --focus north
+window < l : yabai -m window --focus east
+
+# swap window
+window < shift - h : yabai -m window --swap west
+window < shift - j : yabai -m window --swap south
+window < shift - k : yabai -m window --swap north
+window < shift - l : yabai -m window --swap east
+
+# fast focus desktop
+window < ctrl - h : yabai -m space --focus prev
+window < ctrl - l : yabai -m space --focus next
+window < n : yabai -m space --focus prev
+window < p : yabai -m space --focus next
+
+# send window to desktop and follow focus
+window < shift - n : yabai -m window --space prev; yabai -m space --focus prev
+window < shift - p : yabai -m window --space next; yabai -m space --focus next
+
+# move managed window (0$gG)
+window < 0         : yabai -m window --warp west
+window < shift - 4 : yabai -m window --warp east
+window < g         : yabai -m window --warp north
+window < shift - g : yabai -m window --warp south
+
+# send away window
+window < x : yabai -m window --space prev
+window < shift - x : yabai -m window --space next
+
+# toggle
+window < s : yabai -m window --toggle sticky
+window < r : yabai -m window --toggle split
+
+# # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
+# window < w : yabai -m space --create && \
+#              index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
+#              yabai -m window --space "${index}" && \
+#              yabai -m space --focus "${index}"
+
+# ===== apps =====
+::view @
+::open @
+command, window < v ; view
+command, window < o ; open
+view, open < return ; default
+
+# Browser
+view, open < b : open -a /Applications/Firefox.app ;\
+               skhd -k "return"
+
+# Editor
+view, open < e : open -a /usr/local/Cellar/emacs-plus/HEAD-b48ab74/Emacs.app ;\
+               skhd -k "return"
+
+# Messagers
+view, open < m : open -a "/Applications/Station.app" ;\
+               skhd -k "return"
+
+# Slack
+view, open < s : open -a "/Applications/Slack.app" ;\
+               skhd -k "return"
+
+# Terminal Emulator
+view   < t : open -a /Applications/Alacritty.app ;\
+           skhd -k "return"
+open < t : open -na /Applications/Alacritty.app ;\
+           skhd -k "return"
+
+# Vim
+view   < v : open -a /Applications/MacVim.app ;\
+         skhd -k "return"
+open < v : open -na /Applications/MacVim.app ;\
+               skhd -k "return"
+
+# ===== browse =====
+# Alfred : Hyper - *
+::browse @
+command < b ; browse
+browse < return ; default
+
+# Archwiki
+browse < a : skhd -k "hyper - a"
+browse < hyper - a -> ; default
+
+# Dictionary
+browse < d : skhd -k "hyper - d"
+browse < hyper - d -> ; default
+
+# Facebook
+browse < f : skhd -k "hyper - f"
+browse < hyper - f -> ; default
+
+# Gregg
+browse < g : skhd -k "hyper - g"
+browse < hyper - g -> ; default
+
+# wikiHow
+browse < h : skhd -k "hyper - h"
+browse < hyper - h -> ; default
+
+# Map
+browse < m : skhd -k "hyper - m"
+browse < hyper - m -> ; default
+
+# Netflix
+browse < n : skhd -k "hyper - n"
+browse < hyper - n -> ; default
+
+# Pinterest
+browse < p : skhd -k "hyper - p"
+browse < hyper - p -> ; default
+
+# Tweeter
+browse < t : skhd -k "hyper - t"
+browse < hyper - t -> ; default
+
+# Wikipedia
+browse < w : skhd -k "hyper - w"
+browse < hyper - w -> ; default
+
+# Youtube
+browse < y : skhd -k "hyper - y"
+browse < hyper - y -> ; default
+
+
+# ===== search =====
+# Alfred : cmd + alt + ctrl
+::search @
+command < s ; search
+search < return ; default
+
+# Archwiki
+search < a : skhd -k "cmd + alt + ctrl - a"
+search < cmd + alt + ctrl - a -> ; default
+
+# Dictionary
+search < d : skhd -k "cmd + alt + ctrl - d"
+search < cmd + alt + ctrl - d -> ; default
+
+# Google
+search < g : skhd -k "cmd + alt + ctrl - g"
+search < cmd + alt + ctrl - g -> ; default
+
+# wikiHow
+search < h : skhd -k "cmd + alt + ctrl - h"
+search < cmd + alt + ctrl - h -> ; default
+
+# Image
+search < i : skhd -k "cmd + alt + ctrl - i"
+search < cmd + alt + ctrl - i -> ; default
+
+# Map
+search < m : skhd -k "cmd + alt + ctrl - m"
+search < cmd + alt + ctrl - m -> ; default
+
+# Stackoverflow
+search < s : skhd -k "cmd + alt + ctrl - s"
+search < cmd + alt + ctrl - s -> ; default
+
+# Wikipedia
+search < w : skhd -k "cmd + alt + ctrl - w"
+search < cmd + alt + ctrl - w -> ; default
+
+# Youtube
+search < y : skhd -k "cmd + alt + ctrl - y"
+search < cmd + alt + ctrl - y -> ; default
+
+
+# ===== toggle =====
+::toggle @
+command < t ; toggle
+toggle < return ; default
+
+# toggle sticky(+float), topmost, picture-in-picture
+toggle < t : yabai -m window --toggle topmost
+toggle < p : yabai -m window --toggle pip
+toggle < f : yabai -m window --toggle float;\
+             yabai -m window --grid 4:4:1:1:2:2
